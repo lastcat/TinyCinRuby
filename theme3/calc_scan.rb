@@ -1,6 +1,4 @@
 require_relative 'calc_rule.tab.rb'
-#TODO:あまりにもアレなのでちゃんと書く
-#TODO:改行をはさむ入力に対応する
 class TinyCC
   def parse(str)
     @q = []
@@ -63,11 +61,13 @@ parser = TinyCC.new
 puts
 puts 'type "Q" to quit.'
 puts
-while true
+#while true
   puts
   print '? '
-  str = gets.chop!
-  break if /q/i =~ str
+  #str = gets.chop!
+  str = File.open("test.c").read
+  puts str
+#  break if /\z/i =~ str
   begin
     puts "= #{parser.parse(str)}"
 	#parser.parse(str)
@@ -75,4 +75,4 @@ while true
     puts $!
 	p @q
   end
-end
+#end

@@ -33,7 +33,7 @@ rule
 	function_definition:RESERVED declarator '(' parameter_type_list ')' compound_statement
 
 	parameter_type_list:parameter_declaration
-	                   |parameter_type_list ',' parameter_declaraion
+	                   |parameter_type_list ',' parameter_declaration
 					   | /* none */
 
 	parameter_declaration:RESERVED declarator

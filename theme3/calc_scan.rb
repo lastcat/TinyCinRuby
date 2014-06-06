@@ -14,7 +14,6 @@ class TinyCC
 	    @q.push [s,s]
 	  when /\Areturn/
 		s = $&
-		puts "hoge"
 		@q.push [s,s]
       when /\Awhile/
 	    s = $&
@@ -46,7 +45,7 @@ class TinyCC
       str = $'
     end
     @q.push [false, '$end']
-	puts @q
+#	puts @q
     do_parse
   end
 

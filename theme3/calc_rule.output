@@ -1,6 +1,6 @@
-state 22 contains 1 shift/reduce conflicts
-state 25 contains 9 shift/reduce conflicts
-state 99 contains 1 shift/reduce conflicts
+state 23 contains 1 shift/reduce conflicts
+state 26 contains 9 shift/reduce conflicts
+state 100 contains 1 shift/reduce conflicts
 
 
 -------- Grammar --------
@@ -9,13 +9,13 @@ rule 1 program: external_declaration
 rule 2 program: program external_declaration
 rule 3 external_declaration: declaration
 rule 4 external_declaration: function_definition
-rule 5 declaration: RESERVED declarator_list
+rule 5 declaration: RESERVED declarator_list ";"
 rule 6 declarator_list: declarator
 rule 7 declarator_list: declarator_list "," declarator
 rule 8 declarator: IDENTIFIER
 rule 9 function_definition: RESERVED declarator "(" parameter_type_list ")" compound_statement
 rule 10 parameter_type_list: parameter_declaration
-rule 11 parameter_type_list: parameter_type_list "," parameter_declaraion
+rule 11 parameter_type_list: parameter_type_list "," parameter_declaration
 rule 12 parameter_type_list: 
 rule 13 parameter_declaration: RESERVED declarator
 rule 14 statement: ";"
@@ -69,79 +69,79 @@ rule 59 argument_expression_list:
 
 **Nonterminals, with rules where they appear
 
-  $start (29)
+  $start (31)
     on right: 
     on left : 
-  program (30)
+  program (32)
     on right: 2
     on left : 1 2
-  external_declaration (31)
+  external_declaration (33)
     on right: 1 2
     on left : 3 4
-  declaration (32)
+  declaration (34)
     on right: 3 22 23
     on left : 5
-  function_definition (33)
+  function_definition (35)
     on right: 4
     on left : 9
-  declarator_list (34)
+  declarator_list (36)
     on right: 5 7
     on left : 6 7
-  declarator (35)
+  declarator (37)
     on right: 6 7 9 13
     on left : 8
-  parameter_type_list (36)
+  parameter_type_list (38)
     on right: 9 11
     on left : 10 11 12
-  compound_statement (37)
+  compound_statement (39)
     on right: 9 16
     on left : 21
-  parameter_declaration (38)
-    on right: 10
+  parameter_declaration (40)
+    on right: 10 11
     on left : 13
-  statement (39)
+  statement (41)
     on right: 17 18 19 25 26
     on left : 14 15 16 17 18 19 20
-  expression (40)
+  expression (42)
     on right: 15 17 18 19 20 29 56
     on left : 28 29
-  declaration_list (41)
+  declaration_list (43)
     on right: 21 23
     on left : 22 23 24
-  statement_list (42)
+  statement_list (44)
     on right: 21 26
     on left : 25 26 27
-  assign_expr (43)
+  assign_expr (45)
     on right: 28 29 31 57 58
     on left : 30 31
-  logical_or_expr (44)
+  logical_or_expr (46)
     on right: 30 33
     on left : 32 33
-  logical_and_expr (45)
+  logical_and_expr (47)
     on right: 32 33 35
     on left : 34 35
-  equality_expr (46)
+  equality_expr (48)
     on right: 34 35 37 38
     on left : 36 37 38
-  relational_expr (47)
+  relational_expr (49)
     on right: 36 37 38 40 41 42 43
     on left : 39 40 41 42 43
-  add_expr (48)
+  add_expr (50)
     on right: 39 40 41 42 43 45 46
     on left : 44 45 46
-  mult_expr (49)
+  mult_expr (51)
     on right: 44 45 46 48 49
     on left : 47 48 49
-  unary_expr (50)
+  unary_expr (52)
     on right: 47 48 49 51
     on left : 50 51
-  postfix_expr (51)
+  postfix_expr (53)
     on right: 50
     on left : 52 53
-  primary_expr (52)
+  primary_expr (54)
     on right: 52
     on left : 54 55 56
-  argument_expression_list (53)
+  argument_expression_list (55)
     on right: 53 58
     on left : 57 58 59
 
@@ -149,33 +149,35 @@ rule 59 argument_expression_list:
 
   $end (0) 
   error (1) 
-  RESERVED (2) 5 9 13
-  "," (3) 7 11 29 58
-  IDENTIFIER (4) 8 31 53 54
-  "(" (5) 9 17 18 19 53 56
-  ")" (6) 9 17 18 19 53 56
-  parameter_declaraion (7) 11
-  ";" (8) 14 15 20
-  "if" (9) 17 18
-  "else" (10) 18
-  "while" (11) 19
-  "return" (12) 20
-  "{" (13) 21
-  "}" (14) 21
-  "=" (15) 31
+  "*" (2) 48
+  "/" (3) 49
+  "%" (4) 
+  "+" (5) 45
+  "-" (6) 46 51
+  "<" (7) 40
+  ">" (8) 41
+  "<=" (9) 42
+  ">=" (10) 43
+  "==" (11) 37
+  "!=" (12) 38
+  "&" (13) 
+  "|" (14) 
+  "&&" (15) 35
   "||" (16) 33
-  "&&" (17) 35
-  "==" (18) 37
-  "!=" (19) 38
-  "<" (20) 40
-  ">" (21) 41
-  "<=" (22) 42
-  ">=" (23) 43
-  "+" (24) 45
-  "-" (25) 46 51
-  "*" (26) 48
-  "/" (27) 49
-  CONSTANT (28) 55
+  ")" (17) 9 17 18 19 53 56
+  "}" (18) 21
+  "(" (19) 9 17 18 19 53 56
+  "{" (20) 21
+  RESERVED (21) 5 9 13
+  ";" (22) 5 14 15 20
+  "," (23) 7 11 29 58
+  IDENTIFIER (24) 8 31 53 54
+  "if" (25) 17 18
+  "else" (26) 18
+  "while" (27) 19
+  "return" (28) 20
+  "=" (29) 31
+  CONSTANT (30) 55
 
 --------- State ---------
 
@@ -223,7 +225,7 @@ state 4
 
 state 5
 
-   5) declaration : RESERVED _ declarator_list
+   5) declaration : RESERVED _ declarator_list ";"
    9) function_definition : RESERVED _ declarator "(" parameter_type_list ")" compound_statement
 
   IDENTIFIER    shift, and go to state 10
@@ -246,11 +248,11 @@ state 7
 
 state 8
 
-   5) declaration : RESERVED declarator_list _
+   5) declaration : RESERVED declarator_list _ ";"
    7) declarator_list : declarator_list _ "," declarator
 
-  ","           shift, and go to state 12
-  $default      reduce using rule 5 (declaration)
+  ";"           shift, and go to state 12
+  ","           shift, and go to state 13
 
 
 state 9
@@ -258,7 +260,7 @@ state 9
    6) declarator_list : declarator _
    9) function_definition : RESERVED declarator _ "(" parameter_type_list ")" compound_statement
 
-  "("           shift, and go to state 13
+  "("           shift, and go to state 14
   $default      reduce using rule 6 (declarator_list)
 
 
@@ -277,316 +279,324 @@ state 11
 
 state 12
 
+   5) declaration : RESERVED declarator_list ";" _
+
+  $default      reduce using rule 5 (declaration)
+
+
+state 13
+
    7) declarator_list : declarator_list "," _ declarator
 
   IDENTIFIER    shift, and go to state 10
 
-  declarator    go to state 14
+  declarator    go to state 15
 
-state 13
+state 14
 
    9) function_definition : RESERVED declarator "(" _ parameter_type_list ")" compound_statement
 
-  RESERVED      shift, and go to state 17
+  RESERVED      shift, and go to state 18
   $default      reduce using rule 12 (parameter_type_list)
 
-  parameter_type_list  go to state 15
-  parameter_declaration  go to state 16
+  parameter_type_list  go to state 16
+  parameter_declaration  go to state 17
 
-state 14
+state 15
 
    7) declarator_list : declarator_list "," declarator _
 
   $default      reduce using rule 7 (declarator_list)
 
 
-state 15
+state 16
 
    9) function_definition : RESERVED declarator "(" parameter_type_list _ ")" compound_statement
-  11) parameter_type_list : parameter_type_list _ "," parameter_declaraion
+  11) parameter_type_list : parameter_type_list _ "," parameter_declaration
 
-  ","           shift, and go to state 19
-  ")"           shift, and go to state 18
+  ")"           shift, and go to state 19
+  ","           shift, and go to state 20
 
 
-state 16
+state 17
 
   10) parameter_type_list : parameter_declaration _
 
   $default      reduce using rule 10 (parameter_type_list)
 
 
-state 17
+state 18
 
   13) parameter_declaration : RESERVED _ declarator
 
   IDENTIFIER    shift, and go to state 10
 
-  declarator    go to state 20
-
-state 18
-
-   9) function_definition : RESERVED declarator "(" parameter_type_list ")" _ compound_statement
-
-  "{"           shift, and go to state 22
-
-  compound_statement  go to state 21
+  declarator    go to state 21
 
 state 19
 
-  11) parameter_type_list : parameter_type_list "," _ parameter_declaraion
+   9) function_definition : RESERVED declarator "(" parameter_type_list ")" _ compound_statement
 
-  parameter_declaraion  shift, and go to state 23
+  "{"           shift, and go to state 23
 
+  compound_statement  go to state 22
 
 state 20
+
+  11) parameter_type_list : parameter_type_list "," _ parameter_declaration
+
+  RESERVED      shift, and go to state 18
+
+  parameter_declaration  go to state 24
+
+state 21
 
   13) parameter_declaration : RESERVED declarator _
 
   $default      reduce using rule 13 (parameter_declaration)
 
 
-state 21
+state 22
 
    9) function_definition : RESERVED declarator "(" parameter_type_list ")" compound_statement _
 
   $default      reduce using rule 9 (function_definition)
 
 
-state 22
+state 23
 
   21) compound_statement : "{" _ declaration_list statement_list "}"
 
-  RESERVED      shift, and go to state 24
+  RESERVED      shift, and go to state 25
   RESERVED      [reduce using rule 24 (declaration_list)]
   $default      reduce using rule 24 (declaration_list)
 
-  declaration_list  go to state 25
-  declaration   go to state 26
+  declaration_list  go to state 26
+  declaration   go to state 27
 
-state 23
+state 24
 
-  11) parameter_type_list : parameter_type_list "," parameter_declaraion _
+  11) parameter_type_list : parameter_type_list "," parameter_declaration _
 
   $default      reduce using rule 11 (parameter_type_list)
 
 
-state 24
+state 25
 
-   5) declaration : RESERVED _ declarator_list
+   5) declaration : RESERVED _ declarator_list ";"
 
   IDENTIFIER    shift, and go to state 10
 
   declarator_list  go to state 8
-  declarator    go to state 27
+  declarator    go to state 28
 
-state 25
+state 26
 
   21) compound_statement : "{" declaration_list _ statement_list "}"
   23) declaration_list : declaration_list _ declaration
 
-  RESERVED      shift, and go to state 24
-  IDENTIFIER    shift, and go to state 39
-  IDENTIFIER    [reduce using rule 27 (statement_list)]
-  "("           shift, and go to state 50
-  "("           [reduce using rule 27 (statement_list)]
-  ";"           shift, and go to state 28
-  ";"           [reduce using rule 27 (statement_list)]
-  "if"          shift, and go to state 31
-  "if"          [reduce using rule 27 (statement_list)]
-  "while"       shift, and go to state 32
-  "while"       [reduce using rule 27 (statement_list)]
-  "return"      shift, and go to state 33
-  "return"      [reduce using rule 27 (statement_list)]
-  "{"           shift, and go to state 22
-  "{"           [reduce using rule 27 (statement_list)]
-  "-"           shift, and go to state 47
+  "-"           shift, and go to state 48
   "-"           [reduce using rule 27 (statement_list)]
-  CONSTANT      shift, and go to state 49
+  "("           shift, and go to state 51
+  "("           [reduce using rule 27 (statement_list)]
+  "{"           shift, and go to state 23
+  "{"           [reduce using rule 27 (statement_list)]
+  RESERVED      shift, and go to state 25
+  ";"           shift, and go to state 29
+  ";"           [reduce using rule 27 (statement_list)]
+  IDENTIFIER    shift, and go to state 40
+  IDENTIFIER    [reduce using rule 27 (statement_list)]
+  "if"          shift, and go to state 32
+  "if"          [reduce using rule 27 (statement_list)]
+  "while"       shift, and go to state 33
+  "while"       [reduce using rule 27 (statement_list)]
+  "return"      shift, and go to state 34
+  "return"      [reduce using rule 27 (statement_list)]
+  CONSTANT      shift, and go to state 50
   CONSTANT      [reduce using rule 27 (statement_list)]
   $default      reduce using rule 27 (statement_list)
 
-  expression    go to state 29
-  compound_statement  go to state 30
-  statement_list  go to state 34
-  declaration   go to state 35
-  statement     go to state 36
-  assign_expr   go to state 37
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  expression    go to state 30
+  compound_statement  go to state 31
+  statement_list  go to state 35
+  declaration   go to state 36
+  statement     go to state 37
+  assign_expr   go to state 38
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
-state 26
+state 27
 
   22) declaration_list : declaration _
 
   $default      reduce using rule 22 (declaration_list)
 
 
-state 27
+state 28
 
    6) declarator_list : declarator _
 
   $default      reduce using rule 6 (declarator_list)
 
 
-state 28
+state 29
 
   14) statement : ";" _
 
   $default      reduce using rule 14 (statement)
 
 
-state 29
+state 30
 
   15) statement : expression _ ";"
   29) expression : expression _ "," assign_expr
 
-  ","           shift, and go to state 52
-  ";"           shift, and go to state 51
+  ";"           shift, and go to state 52
+  ","           shift, and go to state 53
 
 
-state 30
+state 31
 
   16) statement : compound_statement _
 
   $default      reduce using rule 16 (statement)
 
 
-state 31
+state 32
 
   17) statement : "if" _ "(" expression ")" statement
   18) statement : "if" _ "(" expression ")" statement "else" statement
-
-  "("           shift, and go to state 53
-
-
-state 32
-
-  19) statement : "while" _ "(" expression ")" statement
 
   "("           shift, and go to state 54
 
 
 state 33
 
-  20) statement : "return" _ expression ";"
+  19) statement : "while" _ "(" expression ")" statement
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "("           shift, and go to state 55
 
-  expression    go to state 55
-  assign_expr   go to state 37
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
 
 state 34
+
+  20) statement : "return" _ expression ";"
+
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 40
+  CONSTANT      shift, and go to state 50
+
+  expression    go to state 56
+  assign_expr   go to state 38
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
+
+state 35
 
   21) compound_statement : "{" declaration_list statement_list _ "}"
   26) statement_list : statement_list _ statement
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  ";"           shift, and go to state 28
-  "if"          shift, and go to state 31
-  "while"       shift, and go to state 32
-  "return"      shift, and go to state 33
-  "{"           shift, and go to state 22
-  "}"           shift, and go to state 56
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "}"           shift, and go to state 57
+  "("           shift, and go to state 51
+  "{"           shift, and go to state 23
+  ";"           shift, and go to state 29
+  IDENTIFIER    shift, and go to state 40
+  "if"          shift, and go to state 32
+  "while"       shift, and go to state 33
+  "return"      shift, and go to state 34
+  CONSTANT      shift, and go to state 50
 
-  expression    go to state 29
-  compound_statement  go to state 30
-  statement     go to state 57
-  assign_expr   go to state 37
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  expression    go to state 30
+  compound_statement  go to state 31
+  statement     go to state 58
+  assign_expr   go to state 38
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
-state 35
+state 36
 
   23) declaration_list : declaration_list declaration _
 
   $default      reduce using rule 23 (declaration_list)
 
 
-state 36
+state 37
 
   25) statement_list : statement _
 
   $default      reduce using rule 25 (statement_list)
 
 
-state 37
+state 38
 
   28) expression : assign_expr _
 
   $default      reduce using rule 28 (expression)
 
 
-state 38
+state 39
 
   30) assign_expr : logical_or_expr _
   33) logical_or_expr : logical_or_expr _ "||" logical_and_expr
 
-  "||"          shift, and go to state 58
+  "||"          shift, and go to state 59
   $default      reduce using rule 30 (assign_expr)
 
 
-state 39
+state 40
 
   31) assign_expr : IDENTIFIER _ "=" assign_expr
   53) postfix_expr : IDENTIFIER _ "(" argument_expression_list ")"
   54) primary_expr : IDENTIFIER _
 
-  "("           shift, and go to state 60
-  "="           shift, and go to state 59
+  "("           shift, and go to state 61
+  "="           shift, and go to state 60
   $default      reduce using rule 54 (primary_expr)
 
 
-state 40
+state 41
 
   32) logical_or_expr : logical_and_expr _
   35) logical_and_expr : logical_and_expr _ "&&" equality_expr
 
-  "&&"          shift, and go to state 61
+  "&&"          shift, and go to state 62
   $default      reduce using rule 32 (logical_or_expr)
 
 
-state 41
+state 42
 
   34) logical_and_expr : equality_expr _
   37) equality_expr : equality_expr _ "==" relational_expr
   38) equality_expr : equality_expr _ "!=" relational_expr
 
-  "=="          shift, and go to state 62
-  "!="          shift, and go to state 63
+  "=="          shift, and go to state 63
+  "!="          shift, and go to state 64
   $default      reduce using rule 34 (logical_and_expr)
 
 
-state 42
+state 43
 
   36) equality_expr : relational_expr _
   40) relational_expr : relational_expr _ "<" add_expr
@@ -594,515 +604,515 @@ state 42
   42) relational_expr : relational_expr _ "<=" add_expr
   43) relational_expr : relational_expr _ ">=" add_expr
 
-  "<"           shift, and go to state 64
-  ">"           shift, and go to state 65
-  "<="          shift, and go to state 66
-  ">="          shift, and go to state 67
+  "<"           shift, and go to state 65
+  ">"           shift, and go to state 66
+  "<="          shift, and go to state 67
+  ">="          shift, and go to state 68
   $default      reduce using rule 36 (equality_expr)
 
 
-state 43
+state 44
 
   39) relational_expr : add_expr _
   45) add_expr : add_expr _ "+" mult_expr
   46) add_expr : add_expr _ "-" mult_expr
 
-  "+"           shift, and go to state 68
-  "-"           shift, and go to state 69
+  "+"           shift, and go to state 69
+  "-"           shift, and go to state 70
   $default      reduce using rule 39 (relational_expr)
 
 
-state 44
+state 45
 
   44) add_expr : mult_expr _
   48) mult_expr : mult_expr _ "*" unary_expr
   49) mult_expr : mult_expr _ "/" unary_expr
 
-  "*"           shift, and go to state 70
-  "/"           shift, and go to state 71
+  "*"           shift, and go to state 71
+  "/"           shift, and go to state 72
   $default      reduce using rule 44 (add_expr)
 
 
-state 45
+state 46
 
   47) mult_expr : unary_expr _
 
   $default      reduce using rule 47 (mult_expr)
 
 
-state 46
+state 47
 
   50) unary_expr : postfix_expr _
 
   $default      reduce using rule 50 (unary_expr)
 
 
-state 47
+state 48
 
   51) unary_expr : "-" _ unary_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
-  postfix_expr  go to state 46
-  unary_expr    go to state 72
-  primary_expr  go to state 48
+  postfix_expr  go to state 47
+  unary_expr    go to state 73
+  primary_expr  go to state 49
 
-state 48
+state 49
 
   52) postfix_expr : primary_expr _
 
   $default      reduce using rule 52 (postfix_expr)
 
 
-state 49
+state 50
 
   55) primary_expr : CONSTANT _
 
   $default      reduce using rule 55 (primary_expr)
 
 
-state 50
+state 51
 
   56) primary_expr : "(" _ expression ")"
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 40
+  CONSTANT      shift, and go to state 50
 
-  assign_expr   go to state 37
-  expression    go to state 74
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  assign_expr   go to state 38
+  expression    go to state 75
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
-state 51
+state 52
 
   15) statement : expression ";" _
 
   $default      reduce using rule 15 (statement)
 
 
-state 52
+state 53
 
   29) expression : expression "," _ assign_expr
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 40
+  CONSTANT      shift, and go to state 50
 
-  assign_expr   go to state 75
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  assign_expr   go to state 76
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
-state 53
+state 54
 
   17) statement : "if" "(" _ expression ")" statement
   18) statement : "if" "(" _ expression ")" statement "else" statement
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 40
+  CONSTANT      shift, and go to state 50
 
-  expression    go to state 76
-  assign_expr   go to state 37
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  expression    go to state 77
+  assign_expr   go to state 38
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
-state 54
+state 55
 
   19) statement : "while" "(" _ expression ")" statement
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 40
+  CONSTANT      shift, and go to state 50
 
-  expression    go to state 77
-  assign_expr   go to state 37
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  expression    go to state 78
+  assign_expr   go to state 38
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
-state 55
+state 56
 
   20) statement : "return" expression _ ";"
   29) expression : expression _ "," assign_expr
 
-  ","           shift, and go to state 52
-  ";"           shift, and go to state 78
+  ";"           shift, and go to state 79
+  ","           shift, and go to state 53
 
 
-state 56
+state 57
 
   21) compound_statement : "{" declaration_list statement_list "}" _
 
   $default      reduce using rule 21 (compound_statement)
 
 
-state 57
+state 58
 
   26) statement_list : statement_list statement _
 
   $default      reduce using rule 26 (statement_list)
 
 
-state 58
+state 59
 
   33) logical_or_expr : logical_or_expr "||" _ logical_and_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
-  logical_and_expr  go to state 79
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
-
-state 59
-
-  31) assign_expr : IDENTIFIER "=" _ assign_expr
-
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
-
-  logical_or_expr  go to state 38
-  assign_expr   go to state 80
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  logical_and_expr  go to state 80
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 60
 
-  53) postfix_expr : IDENTIFIER "(" _ argument_expression_list ")"
+  31) assign_expr : IDENTIFIER "=" _ assign_expr
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
-  $default      reduce using rule 59 (argument_expression_list)
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 40
+  CONSTANT      shift, and go to state 50
 
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
-  argument_expression_list  go to state 81
-  assign_expr   go to state 82
+  logical_or_expr  go to state 39
+  assign_expr   go to state 81
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 61
 
-  35) logical_and_expr : logical_and_expr "&&" _ equality_expr
+  53) postfix_expr : IDENTIFIER "(" _ argument_expression_list ")"
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 40
+  CONSTANT      shift, and go to state 50
+  $default      reduce using rule 59 (argument_expression_list)
 
-  equality_expr  go to state 83
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
+  argument_expression_list  go to state 82
+  assign_expr   go to state 83
 
 state 62
 
-  37) equality_expr : equality_expr "==" _ relational_expr
+  35) logical_and_expr : logical_and_expr "&&" _ equality_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
-  relational_expr  go to state 84
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  equality_expr  go to state 84
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 63
 
-  38) equality_expr : equality_expr "!=" _ relational_expr
+  37) equality_expr : equality_expr "==" _ relational_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
   relational_expr  go to state 85
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 64
 
-  40) relational_expr : relational_expr "<" _ add_expr
+  38) equality_expr : equality_expr "!=" _ relational_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
-  add_expr      go to state 86
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  relational_expr  go to state 86
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 65
 
-  41) relational_expr : relational_expr ">" _ add_expr
+  40) relational_expr : relational_expr "<" _ add_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
   add_expr      go to state 87
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 66
 
-  42) relational_expr : relational_expr "<=" _ add_expr
+  41) relational_expr : relational_expr ">" _ add_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
   add_expr      go to state 88
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 67
 
-  43) relational_expr : relational_expr ">=" _ add_expr
+  42) relational_expr : relational_expr "<=" _ add_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
   add_expr      go to state 89
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 68
 
-  45) add_expr : add_expr "+" _ mult_expr
+  43) relational_expr : relational_expr ">=" _ add_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
-  mult_expr     go to state 90
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  add_expr      go to state 90
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 69
 
-  46) add_expr : add_expr "-" _ mult_expr
+  45) add_expr : add_expr "+" _ mult_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
   mult_expr     go to state 91
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 70
 
-  48) mult_expr : mult_expr "*" _ unary_expr
+  46) add_expr : add_expr "-" _ mult_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
-  unary_expr    go to state 92
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  mult_expr     go to state 92
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 71
 
-  49) mult_expr : mult_expr "/" _ unary_expr
+  48) mult_expr : mult_expr "*" _ unary_expr
 
-  IDENTIFIER    shift, and go to state 73
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
 
   unary_expr    go to state 93
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
 state 72
+
+  49) mult_expr : mult_expr "/" _ unary_expr
+
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 74
+  CONSTANT      shift, and go to state 50
+
+  unary_expr    go to state 94
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
+
+state 73
 
   51) unary_expr : "-" unary_expr _
 
   $default      reduce using rule 51 (unary_expr)
 
 
-state 73
+state 74
 
   53) postfix_expr : IDENTIFIER _ "(" argument_expression_list ")"
   54) primary_expr : IDENTIFIER _
 
-  "("           shift, and go to state 60
+  "("           shift, and go to state 61
   $default      reduce using rule 54 (primary_expr)
 
 
-state 74
+state 75
 
   29) expression : expression _ "," assign_expr
   56) primary_expr : "(" expression _ ")"
 
-  ","           shift, and go to state 52
-  ")"           shift, and go to state 94
+  ")"           shift, and go to state 95
+  ","           shift, and go to state 53
 
 
-state 75
+state 76
 
   29) expression : expression "," assign_expr _
 
   $default      reduce using rule 29 (expression)
 
 
-state 76
+state 77
 
   17) statement : "if" "(" expression _ ")" statement
   18) statement : "if" "(" expression _ ")" statement "else" statement
   29) expression : expression _ "," assign_expr
 
-  ","           shift, and go to state 52
-  ")"           shift, and go to state 95
+  ")"           shift, and go to state 96
+  ","           shift, and go to state 53
 
 
-state 77
+state 78
 
   19) statement : "while" "(" expression _ ")" statement
   29) expression : expression _ "," assign_expr
 
-  ","           shift, and go to state 52
-  ")"           shift, and go to state 96
+  ")"           shift, and go to state 97
+  ","           shift, and go to state 53
 
 
-state 78
+state 79
 
   20) statement : "return" expression ";" _
 
   $default      reduce using rule 20 (statement)
 
 
-state 79
+state 80
 
   33) logical_or_expr : logical_or_expr "||" logical_and_expr _
   35) logical_and_expr : logical_and_expr _ "&&" equality_expr
 
-  "&&"          shift, and go to state 61
+  "&&"          shift, and go to state 62
   $default      reduce using rule 33 (logical_or_expr)
 
 
-state 80
+state 81
 
   31) assign_expr : IDENTIFIER "=" assign_expr _
 
   $default      reduce using rule 31 (assign_expr)
 
 
-state 81
+state 82
 
   53) postfix_expr : IDENTIFIER "(" argument_expression_list _ ")"
   58) argument_expression_list : argument_expression_list _ "," assign_expr
 
-  ","           shift, and go to state 98
-  ")"           shift, and go to state 97
+  ")"           shift, and go to state 98
+  ","           shift, and go to state 99
 
 
-state 82
+state 83
 
   57) argument_expression_list : assign_expr _
 
   $default      reduce using rule 57 (argument_expression_list)
 
 
-state 83
+state 84
 
   35) logical_and_expr : logical_and_expr "&&" equality_expr _
   37) equality_expr : equality_expr _ "==" relational_expr
   38) equality_expr : equality_expr _ "!=" relational_expr
 
-  "=="          shift, and go to state 62
-  "!="          shift, and go to state 63
+  "=="          shift, and go to state 63
+  "!="          shift, and go to state 64
   $default      reduce using rule 35 (logical_and_expr)
 
 
-state 84
+state 85
 
   37) equality_expr : equality_expr "==" relational_expr _
   40) relational_expr : relational_expr _ "<" add_expr
@@ -1110,14 +1120,14 @@ state 84
   42) relational_expr : relational_expr _ "<=" add_expr
   43) relational_expr : relational_expr _ ">=" add_expr
 
-  "<"           shift, and go to state 64
-  ">"           shift, and go to state 65
-  "<="          shift, and go to state 66
-  ">="          shift, and go to state 67
+  "<"           shift, and go to state 65
+  ">"           shift, and go to state 66
+  "<="          shift, and go to state 67
+  ">="          shift, and go to state 68
   $default      reduce using rule 37 (equality_expr)
 
 
-state 85
+state 86
 
   38) equality_expr : equality_expr "!=" relational_expr _
   40) relational_expr : relational_expr _ "<" add_expr
@@ -1125,237 +1135,237 @@ state 85
   42) relational_expr : relational_expr _ "<=" add_expr
   43) relational_expr : relational_expr _ ">=" add_expr
 
-  "<"           shift, and go to state 64
-  ">"           shift, and go to state 65
-  "<="          shift, and go to state 66
-  ">="          shift, and go to state 67
+  "<"           shift, and go to state 65
+  ">"           shift, and go to state 66
+  "<="          shift, and go to state 67
+  ">="          shift, and go to state 68
   $default      reduce using rule 38 (equality_expr)
 
 
-state 86
+state 87
 
   40) relational_expr : relational_expr "<" add_expr _
   45) add_expr : add_expr _ "+" mult_expr
   46) add_expr : add_expr _ "-" mult_expr
 
-  "+"           shift, and go to state 68
-  "-"           shift, and go to state 69
+  "+"           shift, and go to state 69
+  "-"           shift, and go to state 70
   $default      reduce using rule 40 (relational_expr)
 
 
-state 87
+state 88
 
   41) relational_expr : relational_expr ">" add_expr _
   45) add_expr : add_expr _ "+" mult_expr
   46) add_expr : add_expr _ "-" mult_expr
 
-  "+"           shift, and go to state 68
-  "-"           shift, and go to state 69
+  "+"           shift, and go to state 69
+  "-"           shift, and go to state 70
   $default      reduce using rule 41 (relational_expr)
 
 
-state 88
+state 89
 
   42) relational_expr : relational_expr "<=" add_expr _
   45) add_expr : add_expr _ "+" mult_expr
   46) add_expr : add_expr _ "-" mult_expr
 
-  "+"           shift, and go to state 68
-  "-"           shift, and go to state 69
+  "+"           shift, and go to state 69
+  "-"           shift, and go to state 70
   $default      reduce using rule 42 (relational_expr)
 
 
-state 89
+state 90
 
   43) relational_expr : relational_expr ">=" add_expr _
   45) add_expr : add_expr _ "+" mult_expr
   46) add_expr : add_expr _ "-" mult_expr
 
-  "+"           shift, and go to state 68
-  "-"           shift, and go to state 69
+  "+"           shift, and go to state 69
+  "-"           shift, and go to state 70
   $default      reduce using rule 43 (relational_expr)
 
 
-state 90
+state 91
 
   45) add_expr : add_expr "+" mult_expr _
   48) mult_expr : mult_expr _ "*" unary_expr
   49) mult_expr : mult_expr _ "/" unary_expr
 
-  "*"           shift, and go to state 70
-  "/"           shift, and go to state 71
+  "*"           shift, and go to state 71
+  "/"           shift, and go to state 72
   $default      reduce using rule 45 (add_expr)
 
 
-state 91
+state 92
 
   46) add_expr : add_expr "-" mult_expr _
   48) mult_expr : mult_expr _ "*" unary_expr
   49) mult_expr : mult_expr _ "/" unary_expr
 
-  "*"           shift, and go to state 70
-  "/"           shift, and go to state 71
+  "*"           shift, and go to state 71
+  "/"           shift, and go to state 72
   $default      reduce using rule 46 (add_expr)
 
 
-state 92
+state 93
 
   48) mult_expr : mult_expr "*" unary_expr _
 
   $default      reduce using rule 48 (mult_expr)
 
 
-state 93
+state 94
 
   49) mult_expr : mult_expr "/" unary_expr _
 
   $default      reduce using rule 49 (mult_expr)
 
 
-state 94
+state 95
 
   56) primary_expr : "(" expression ")" _
 
   $default      reduce using rule 56 (primary_expr)
 
 
-state 95
+state 96
 
   17) statement : "if" "(" expression ")" _ statement
   18) statement : "if" "(" expression ")" _ statement "else" statement
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  ";"           shift, and go to state 28
-  "if"          shift, and go to state 31
-  "while"       shift, and go to state 32
-  "return"      shift, and go to state 33
-  "{"           shift, and go to state 22
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  "{"           shift, and go to state 23
+  ";"           shift, and go to state 29
+  IDENTIFIER    shift, and go to state 40
+  "if"          shift, and go to state 32
+  "while"       shift, and go to state 33
+  "return"      shift, and go to state 34
+  CONSTANT      shift, and go to state 50
 
-  expression    go to state 29
-  compound_statement  go to state 30
-  statement     go to state 99
-  assign_expr   go to state 37
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  expression    go to state 30
+  compound_statement  go to state 31
+  statement     go to state 100
+  assign_expr   go to state 38
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
-state 96
+state 97
 
   19) statement : "while" "(" expression ")" _ statement
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  ";"           shift, and go to state 28
-  "if"          shift, and go to state 31
-  "while"       shift, and go to state 32
-  "return"      shift, and go to state 33
-  "{"           shift, and go to state 22
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  "{"           shift, and go to state 23
+  ";"           shift, and go to state 29
+  IDENTIFIER    shift, and go to state 40
+  "if"          shift, and go to state 32
+  "while"       shift, and go to state 33
+  "return"      shift, and go to state 34
+  CONSTANT      shift, and go to state 50
 
-  expression    go to state 29
-  compound_statement  go to state 30
-  statement     go to state 100
-  assign_expr   go to state 37
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  expression    go to state 30
+  compound_statement  go to state 31
+  statement     go to state 101
+  assign_expr   go to state 38
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
-state 97
+state 98
 
   53) postfix_expr : IDENTIFIER "(" argument_expression_list ")" _
 
   $default      reduce using rule 53 (postfix_expr)
 
 
-state 98
+state 99
 
   58) argument_expression_list : argument_expression_list "," _ assign_expr
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  IDENTIFIER    shift, and go to state 40
+  CONSTANT      shift, and go to state 50
 
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
-  assign_expr   go to state 101
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
+  assign_expr   go to state 102
 
-state 99
+state 100
 
   17) statement : "if" "(" expression ")" statement _
   18) statement : "if" "(" expression ")" statement _ "else" statement
 
-  "else"        shift, and go to state 102
+  "else"        shift, and go to state 103
   "else"        [reduce using rule 17 (statement)]
   $default      reduce using rule 17 (statement)
 
 
-state 100
+state 101
 
   19) statement : "while" "(" expression ")" statement _
 
   $default      reduce using rule 19 (statement)
 
 
-state 101
+state 102
 
   58) argument_expression_list : argument_expression_list "," assign_expr _
 
   $default      reduce using rule 58 (argument_expression_list)
 
 
-state 102
+state 103
 
   18) statement : "if" "(" expression ")" statement "else" _ statement
 
-  IDENTIFIER    shift, and go to state 39
-  "("           shift, and go to state 50
-  ";"           shift, and go to state 28
-  "if"          shift, and go to state 31
-  "while"       shift, and go to state 32
-  "return"      shift, and go to state 33
-  "{"           shift, and go to state 22
-  "-"           shift, and go to state 47
-  CONSTANT      shift, and go to state 49
+  "-"           shift, and go to state 48
+  "("           shift, and go to state 51
+  "{"           shift, and go to state 23
+  ";"           shift, and go to state 29
+  IDENTIFIER    shift, and go to state 40
+  "if"          shift, and go to state 32
+  "while"       shift, and go to state 33
+  "return"      shift, and go to state 34
+  CONSTANT      shift, and go to state 50
 
-  expression    go to state 29
-  compound_statement  go to state 30
-  statement     go to state 103
-  assign_expr   go to state 37
-  logical_or_expr  go to state 38
-  logical_and_expr  go to state 40
-  equality_expr  go to state 41
-  relational_expr  go to state 42
-  add_expr      go to state 43
-  mult_expr     go to state 44
-  unary_expr    go to state 45
-  postfix_expr  go to state 46
-  primary_expr  go to state 48
+  expression    go to state 30
+  compound_statement  go to state 31
+  statement     go to state 104
+  assign_expr   go to state 38
+  logical_or_expr  go to state 39
+  logical_and_expr  go to state 41
+  equality_expr  go to state 42
+  relational_expr  go to state 43
+  add_expr      go to state 44
+  mult_expr     go to state 45
+  unary_expr    go to state 46
+  postfix_expr  go to state 47
+  primary_expr  go to state 49
 
-state 103
+state 104
 
   18) statement : "if" "(" expression ")" statement "else" statement _
 

@@ -1,0 +1,10 @@
+
+type "Q" to quit.
+
+
+? int x;
+int f(int x, int y)
+{
+  int x,y;
+}
+= [[["x", "info"]], [["int", "f", "info"], [["x", "info"], ["y", "info"]], [[["x", "info"], ["y", "info"]], nil]]]

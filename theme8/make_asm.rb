@@ -37,6 +37,19 @@ def analyze_compound(comp,statement_list)
   end 
 end
 
+def arith(statement)
+  #statement[0]=演算子,statament[1]=非演算子,statement[2]=非演算子
+  #演算子について再帰的に行わなくてはならない　算術式のみならいいけど関数がある可能性ある
+  #とりあえず算術式のみで考える
+  case statement[0]
+    when "+"
+	when "-"
+	when "*"
+	when "/"
+  end
+
+end
+
 def make_asm(syntax_tree)
   @global_var = []#大域変数がとりあえずこの中にある。（大域変数って使うのか？）
   @statement_list = []
@@ -63,7 +76,7 @@ def make_asm(syntax_tree)
     puts
   end
   #puts @asm_code.to_s
-  @statement_list.each do |i|
-    puts i.to_s
-  end
+  #@statement_list.each do |i|
+  #  puts i.to_s
+  #end
 end

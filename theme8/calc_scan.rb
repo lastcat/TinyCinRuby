@@ -1,4 +1,4 @@
-
+require_relative 'make_asm.rb'
 require_relative 'calc_rule.tab.rb'
 
 class TinyCC
@@ -219,8 +219,9 @@ puts
   puts str
 #  break if /\z/i =~ str
   begin
-    puts "= #{parser.parse(str)}"
+    #puts "= #{parser.parse(str)}"
 	#parser.parse(str)
+	make_asm(parser.parse(str))
   rescue ParseError
     puts $!
 	p @q

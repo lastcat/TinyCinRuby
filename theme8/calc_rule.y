@@ -61,7 +61,7 @@ rule
 	compound_statement:'{'{@cur_lev += 1} declaration_list statement_list'}'{stack_pop}{
 	                                                         #@cur_lev += 1
 															 #result = [val[1],val[2]]
-															 result = [val[2],val[3]]
+															 result = ["comp",val[2],val[3]]
 															 #@cur_lev -= 1
 															 }
 
@@ -79,7 +79,8 @@ rule
 			  |expression',' assign_expr {result = [val[0],val[2]]}
 	
 	assign_expr:logical_or_expr {result = val[0]}
-			   |IDENTIFIER '=' assign_expr {result=[val[1],val[0],val[2]]}
+			   |IDENTIFIER '=' assign_expr {#result=[val[1],val[0],val[2]]}
+			                                result = [val[1],ref_var(val[0]),val[2]]}
 
     logical_or_expr:logical_and_expr{result = val[0]}
 				   |logical_or_expr '||' logical_and_expr{result = [val[1],val[0],val[2]]}

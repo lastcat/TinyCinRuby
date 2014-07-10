@@ -1,5 +1,5 @@
 int x;
-int f(int x,int y)
+int f(int x, int y)
 {
   int x;
   {
@@ -12,7 +12,10 @@ int f(int x,int y)
   }
   {
     int w;
-	x+y+w;
+	x+y+z;
   }
   x+y;
+}
+int g(int a)
+{
 }

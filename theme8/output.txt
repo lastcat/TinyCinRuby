@@ -1,0 +1,17 @@
+
+type "Q" to quit.
+
+
+? int foo(int x)
+{
+  int y;
+  {
+    int h;
+  }
+  y= x*x;
+  return y;
+}
+["func", ["foo", "FUN", 0, 1], [["x", "PARM", 1, 8]], ["comp", [["y", "VAR", 2, -4]], [["comp", [["h", "VAR", 3, -8]], nil], ["=", ["y", "VAR", 2, -4], ["*", ["x", "PARM", 1, 8], ["x", "PARM", 1, 8]]], ["RETURN", ["y", "VAR", 2, -4]]]]]
+	hoge	fuga,piyo
+
+["\thoge\tfuga,piyo\n"]

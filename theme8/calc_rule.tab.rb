@@ -474,7 +474,7 @@ module_eval(<<'.,.,', 'calc_rule.y', 61)
   def _reduce_25(val, _values, result)
     	                                                         #@cur_lev += 1
 															 #result = [val[1],val[2]]
-															 result = [val[2],val[3]]
+															 result = ["comp",val[2],val[3]]
 															 #@cur_lev -= 1
 															 
     result
@@ -536,103 +536,104 @@ module_eval(<<'.,.,', 'calc_rule.y', 80)
 
 module_eval(<<'.,.,', 'calc_rule.y', 81)
   def _reduce_35(val, _values, result)
-    result=[val[1],val[0],val[2]]
+    #result=[val[1],val[0],val[2]]}
+			                                result = [val[1],ref_var(val[0]),val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 83)
+module_eval(<<'.,.,', 'calc_rule.y', 84)
   def _reduce_36(val, _values, result)
     result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 84)
+module_eval(<<'.,.,', 'calc_rule.y', 85)
   def _reduce_37(val, _values, result)
     result = [val[1],val[0],val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 86)
+module_eval(<<'.,.,', 'calc_rule.y', 87)
   def _reduce_38(val, _values, result)
     result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 87)
+module_eval(<<'.,.,', 'calc_rule.y', 88)
   def _reduce_39(val, _values, result)
     result = [val[1],val[0],val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 89)
+module_eval(<<'.,.,', 'calc_rule.y', 90)
   def _reduce_40(val, _values, result)
     result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 90)
+module_eval(<<'.,.,', 'calc_rule.y', 91)
   def _reduce_41(val, _values, result)
     result = [val[1],val[0],val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 91)
+module_eval(<<'.,.,', 'calc_rule.y', 92)
   def _reduce_42(val, _values, result)
     result = [val[1],val[0],val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 93)
+module_eval(<<'.,.,', 'calc_rule.y', 94)
   def _reduce_43(val, _values, result)
     result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 94)
+module_eval(<<'.,.,', 'calc_rule.y', 95)
   def _reduce_44(val, _values, result)
     result = [val[1], val[0], val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 95)
+module_eval(<<'.,.,', 'calc_rule.y', 96)
   def _reduce_45(val, _values, result)
     result = [val[1], val[0], val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 96)
+module_eval(<<'.,.,', 'calc_rule.y', 97)
   def _reduce_46(val, _values, result)
     result = [val[1], val[0], val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 97)
+module_eval(<<'.,.,', 'calc_rule.y', 98)
   def _reduce_47(val, _values, result)
     result = [val[1], val[0], val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 99)
+module_eval(<<'.,.,', 'calc_rule.y', 100)
   def _reduce_48(val, _values, result)
     result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 101)
+module_eval(<<'.,.,', 'calc_rule.y', 102)
   def _reduce_49(val, _values, result)
     			                         #puts("PLUS!!!")
 			                         result = [val[1], val[0], val[2]]
@@ -640,56 +641,56 @@ module_eval(<<'.,.,', 'calc_rule.y', 101)
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 103)
+module_eval(<<'.,.,', 'calc_rule.y', 104)
   def _reduce_50(val, _values, result)
     result = [val[1], val[0], val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 105)
+module_eval(<<'.,.,', 'calc_rule.y', 106)
   def _reduce_51(val, _values, result)
     result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 106)
+module_eval(<<'.,.,', 'calc_rule.y', 107)
   def _reduce_52(val, _values, result)
     result = [val[1], val[0], val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 107)
+module_eval(<<'.,.,', 'calc_rule.y', 108)
   def _reduce_53(val, _values, result)
     result = [val[1], val[0], val[2]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 109)
+module_eval(<<'.,.,', 'calc_rule.y', 110)
   def _reduce_54(val, _values, result)
     result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 110)
+module_eval(<<'.,.,', 'calc_rule.y', 111)
   def _reduce_55(val, _values, result)
     result = [val[0], val[1]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 112)
+module_eval(<<'.,.,', 'calc_rule.y', 113)
   def _reduce_56(val, _values, result)
     result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 113)
+module_eval(<<'.,.,', 'calc_rule.y', 114)
   def _reduce_57(val, _values, result)
     #result = ["FCALL", val[0] ,val[2]]}
 				                                             result = ref_fun(val[0],val[2].size).push(val[2])
@@ -697,35 +698,35 @@ module_eval(<<'.,.,', 'calc_rule.y', 113)
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 117)
+module_eval(<<'.,.,', 'calc_rule.y', 118)
   def _reduce_58(val, _values, result)
     result = ref_var(val[0])
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 118)
+module_eval(<<'.,.,', 'calc_rule.y', 119)
   def _reduce_59(val, _values, result)
     result = val[0]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 119)
+module_eval(<<'.,.,', 'calc_rule.y', 120)
   def _reduce_60(val, _values, result)
     result = val[1]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 121)
+module_eval(<<'.,.,', 'calc_rule.y', 122)
   def _reduce_61(val, _values, result)
     result = [val[0]]
     result
   end
 .,.,
 
-module_eval(<<'.,.,', 'calc_rule.y', 122)
+module_eval(<<'.,.,', 'calc_rule.y', 123)
   def _reduce_62(val, _values, result)
     result =  val[0]+[val[2]]
     result

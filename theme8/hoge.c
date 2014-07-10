@@ -1,15 +1,21 @@
 int x;
-int f(int x,int y)
+int f(int x, int y)
 {
   int x;
   {
     int x,y;
+	x+y;
 	{
 	  int x,z;
+	  x+y+z;
 	}
   }
   {
     int w;
+	x+y+z;
   }
+  x+y;
 }
-
+int g(int a)
+{
+}

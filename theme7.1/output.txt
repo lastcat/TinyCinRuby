@@ -3,8 +3,20 @@ type "Q" to quit.
 
 
 ? int x;
-int f(int x, int y)
+int f(int x,int y)
 {
-  int x,y;
+  int x;
+  {
+    int x,y;
+	{
+	  int x,z;
+	}
+  }
+  {
+    int w;
+  }
 }
-= [[["x", "info"]], [["int", "f", "info"], [["x", "info"], ["y", "info"]], [[["x", "info"], ["y", "info"]], nil]]]
+
+declaration of x shadow a parameter
+declaration of y shadow a parameter
+= [[["x", "VAR", 0, 0]], ["func", ["f", "FUN", 0, 2], [["x", "PARM", 1, 8], ["y", "PARM", 1, 12]], [[["x", "VAR", 2, -4]], [[[["x", "VAR", 3, -8], ["y", "VAR", 3, -12]], [[[["x", "VAR", 4, -16], ["z", "VAR", 4, -20]], nil]]], [[["w", "VAR", 3, -8]], nil]]]]]

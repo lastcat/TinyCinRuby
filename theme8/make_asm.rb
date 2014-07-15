@@ -63,7 +63,10 @@ def make_asm(syntax_tree)
     puts
   end
   #puts @asm_code.to_s
-  @statement_list.each do |i|
-    puts i.to_s
+  #@statement_list.each do |i|
+  #  puts i.to_s
+  #end
+  @asm_code.each do |i|
+    puts i
   end
 end

@@ -6,10 +6,10 @@ class TinyCC
   prechigh
 #    left '*' '/' '%'
 #    left '+' '-'
-	left '<' '>' '<=' '>='
-	left '==' '!='
-	left '&'
-	left '|'
+#	left '<' '>' '<=' '>='
+#	left '==' '!='
+#	left '&'
+#	left '|'
 	left '&&'
 	left '||'
 
@@ -28,20 +28,25 @@ rule
                                               #result = [val[1]].map do |x| x.unshift(val[0]) end}
 
 	declarator_list:declarator{#result = [val[0]]}
-	                                    result = [make_decl(val[0])]}
-				   |declarator_list ',' declarator{result = val[0].push(make_decl(val[2]))}
+	                                    result = [make_decl(val[0]).unshift("int")]}
+				   |declarator_list ',' declarator{result = val[0].push(make_decl(val[2]).unshift("int"))}
 
 	declarator:IDENTIFIER{#result = [val[0]]}
 	                      result = val[0]}
 
 	function_definition:RESERVED declarator '(' {@cur_lev += 1} parameter_type_list ')' compound_statement{stack_pop}
 																							{
-	                                                                                       #@cur_lev += 1
+	                                                                                      #@cur_lev += 1
 	                                                                                       #result = ["func",make_fun_def(val[1],val[4]),val[4],val[6]]
 																						   result = ["func",make_fun_def(val[1],val[4])].push(val[4]).push(val[6])
-																						   @param_add = 4
-																						   #@cur_lev
-																						   }
+																						   @param_add = 4}
+	                                                                                      #@cur_lev}
+
+	#function_definition:RESERVED declator {make_fun_def()} '(' {@cur_rev += 1} parameter_type_list ')' compound_statement{stack_pop}
+	#																													 {
+	#																													   result = ["func",make_fun_def(val[1],val[4])].push(val[4]).push(val[6])
+	#																													   @param_add = 4
+	#																													 }
 
 	parameter_type_list:parameter_declaration{result = [make_param(val[0])]}
 	                   |parameter_type_list ',' parameter_declaration{result = val[0].push(make_param(val[2]))}
@@ -88,6 +93,9 @@ rule
 	logical_and_expr:equality_expr {result = val[0]}
 					|logical_and_expr '&&' equality_expr{result = [val[1],val[0],val[2]]}
 
+#    logical_and_expr:logical_and_expr '&&' equality_expr{result = [val[1],val[0],val[2]]}
+#	                |equality_expr{result = val[0]}
+
 	equality_expr:relational_expr {result = val[0]}
 				 |equality_expr '==' relational_expr {result = [val[1],val[0],val[2]]}
 				 |equality_expr '!=' relational_expr {result = [val[1],val[0],val[2]]}
@@ -117,7 +125,7 @@ rule
 															 #result = ref_fun(val[0],val[2].size)}        
 				
 	primary_expr:IDENTIFIER {result = ref_var(val[0])}
-				|CONSTANT {result = val[0]}
+				|CONSTANT {result = [val[0],"CONSTANT"]}
 				|'('expression')'{result = val[1]}
 
 	argument_expression_list:assign_expr {result = [val[0]]}

@@ -1,5 +1,6 @@
-int foo(int x){
-  int y;
-  y = x*x;
-  return y+2;
+int x;
+int ack(int m,int n){
+  x = m;
+  n = x;
+  return n;
 }

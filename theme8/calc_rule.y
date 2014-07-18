@@ -121,7 +121,7 @@ rule
 
 	postfix_expr:primary_expr{result = val[0]}
 				|IDENTIFIER '('argument_expression_list')' {#result = ["FCALL", val[0] ,val[2]]}
-				                                             result = ref_fun(val[0],val[2].size).push(val[2])}
+				                                             result = val[2]!=nil ? ref_fun(val[0],val[2].size).push(val[2]) : ref_fun(val[0],0).push(val[2])}
 															 #result = ref_fun(val[0],val[2].size)}        
 				
 	primary_expr:IDENTIFIER {result = ref_var(val[0])}

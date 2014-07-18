@@ -1,5 +1,7 @@
 #include <stdio.h>
 main()
 {
-  printf("%d\n",ack(4,6));
+  printf("%d\n",l(1,2,3));
+  printf("%d\n",r(4));
+  printf("%d\n",rsl2());
 }

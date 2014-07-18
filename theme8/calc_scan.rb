@@ -72,6 +72,10 @@ class TinyCC
     @q.shift
   end
 
+  def return_error_num
+     @error_num
+  end
+
   def lookup_sym(name)
     #puts name
     #puts @stack.to_s 
@@ -104,14 +108,14 @@ class TinyCC
   obj = lookup_sym(name)
   if(obj!=[])
     #case obj[0][1]
-	case obj.last[1]
+	case obj.last[2]
 	  when "VAR"
-	    if(obj.last[2] == @cur_lev)
+	    if(obj.last[3] == @cur_lev)
 		  puts("error:redirection of #{name}")
 		  @error_num += 1
 		end
 		when "FUN","UNDEFFUN"
-		  if(obj.last[2] == @cur_lev)
+		  if(obj.last[3] == @cur_lev)
 		    puts("error:#{obj.name} redeclared as defferent kind of symbol")
 			@error_num += 1
 		  end
@@ -164,7 +168,9 @@ class TinyCC
 		  obj.last[2]="FUN"
 	  end
 	end
-    n = [name,"FUN",@cur_lev,param_list.length]
+	n = [name,"FUN",@cur_lev,0]
+    n = [name,"FUN",@cur_lev,param_list.length] if param_list!=nil
+
 	@stack.push(n)
 	return n
   end
@@ -181,7 +187,7 @@ class TinyCC
 	  #return obj[0]
 	  return obj.last
 	else
-	  puts(error:"#{name} undeclared variable")
+	  puts("error:#{name} undeclared variable")
 	  @error_num += 1
 	  n = [name,"VAR",@cur_lev]
 	  @stack.push(n)
@@ -203,10 +209,13 @@ class TinyCC
 		  @error_num += 1
 		  #return obj[0]
 		  #return obj.last
-		when "FUN","UNDEFFUN"
+		when "FUN"
 		  if (param_list != obj[0][3])
-		    puts("number of arguments wrong!")
+		    puts("error:number of arguments wrong!#{obj[0][0]}")
+			@error_num += 1
 		  end
+		   n = [name,"FUN",@cur_lev] 
+		when "UNDEFFUN"
 		   n = [name,"UNDEFFUN",@cur_lev]
 		  #return obj[0]
 		  #puts obj.last
@@ -223,7 +232,7 @@ class TinyCC
 
   def emit(inst,op1,op2)
     str = ""
-    if(op1 == nil)
+    if(op1 == nil&&op2==nil)
       str = "\t#{inst}\n"
     elsif(op2 == nil)
       str = "\t#{inst}\t#{op1}\n"
@@ -262,7 +271,7 @@ def analyze_compound(comp,statement_list)
 
 end
 
-def arith(statement,ret = false)
+def arith(statement,ret = false,cond = false)
   #statement[0]=演算子,statament[1]=非演算子,statement[2]=非演算子
   case statement[0]
     when "int"
@@ -282,7 +291,9 @@ def arith(statement,ret = false)
 		elsif(ret)
 		  code = statement[4] > 0 ? emit("mov","eax","[ebp+#{statement[4]}]") : emit("mov","eax","[ebp#{statement[4]}]")
 		  @asm_code[@asm_code.length,0] = code
-		elsif
+		elsif(cond)
+		  @asm_code.push(emit("mov","eax","[ebp#{statement[4]}]"))
+		else
           statement[4] = allocate_loc
 		  @alloc_count += 1
 		end
@@ -312,7 +323,7 @@ def arith(statement,ret = false)
 		    code =  emit("mov","eax","#{statement[1][0]}")
 			@asm_code[@asm_code.length,0] = code
 		  else
-		    code =  emit("mov","eax" "[ebp#{statement[1][4]}]")
+		    code =  emit("mov","eax" ,"[ebp#{statement[1][4]}]")
 			@asm_code[@asm_code.length,0] = code
 		end
 	  else
@@ -334,15 +345,25 @@ def arith(statement,ret = false)
 	    end
 
 	  else
+	    @asm_code.push(emit("mov","ecx","eax"))
 	    arith(statement[2])
-		code =  emit("add","eax","[ebp#{tmp}]")
-			@asm_code[@asm_code.length,0] = code
+	    @asm_code.push(emit("mov","edx","eax"))
+	    @asm_code.push(emit("mov","eax","ecx"))
+	    #code =  emit("sub","eax","[ebp#{tmp}]")
+	    #   @asm_code[@asm_code.length,0] = code
+		@asm_code.push(emit("add","eax","edx"))
+
 	  end
 	  release_loc
 	when "-"
 	#なんで左右逆にしてたんだっけ（とりあえず元に戻す）
 	  tmp = allocate_loc
 	  #オペランドが式になっているかどうかで頑張って分ける
+	  if(statement.length == 2)
+	    arith(statement[1])
+		@asm_code.push(emit("imul","eax","-1"))
+	else
+
 	  if((statement[1][0]=="int")||(statement[1][1]=="PARM")||(statement[1][1]=="CONSTANT"))
 	    case statement[1][1]
 		  when "PARM"
@@ -352,13 +373,13 @@ def arith(statement,ret = false)
 		    code =  emit("mov","eax","#{statement[1][0]}")
 			@asm_code[@asm_code.length,0] = code
 		  else
-		    code =  emit("mov","eax" "[ebp#{statement[1][4]}]")
+		    code =  emit("mov","eax" ,"[ebp#{statement[1][4]}]")
 			@asm_code[@asm_code.length,0] = code
 		end
 	  else
 	    arith(statement[1])#右オペランドのコード生成
-	    code =  emit("mov","[ebp#{tmp}]","eax")
-		@asm_code[@asm_code.length,0] = code
+	    #code =  emit("mov","[ebp#{tmp}]","eax")
+		#@asm_code[@asm_code.length,0] = code
 	  end
 	  if((statement[2][0]=="int")||(statement[2][1]=="PARM")||(statement[2][1]=="CONSTANT"))
 	    case statement[2][1]
@@ -374,10 +395,16 @@ def arith(statement,ret = false)
 	    end
 
 	  else
+	    @asm_code.push(emit("mov","[ebp#{tmp}]","eax"))
 	    arith(statement[2])
-		code =  emit("sub","eax","[ebp#{tmp}]")
+
+		@asm_code.push(emit("mov","ecx","eax"))
+		@asm_code.push(emit("mov","eax","[ebp#{tmp}]"))
+		code =  emit("sub","eax","ecx")
 			@asm_code[@asm_code.length,0] = code
+		#@asm_code.push(emit("sub","eax","edx"))
 	  end
+    end
 	  release_loc
 	when "*"
 	  tmp = allocate_loc
@@ -391,7 +418,7 @@ def arith(statement,ret = false)
 		    code =  emit("mov","eax","#{statement[1][0]}")
 			@asm_code[@asm_code.length,0] = code
 		  else
-		    code =  emit("mov","eax" "[ebp#{statement[1][4]}]")
+		    code =  emit("mov","eax" ,"[ebp#{statement[1][4]}]")
 			@asm_code[@asm_code.length,0] = code
 		end
 	  else
@@ -430,7 +457,7 @@ def arith(statement,ret = false)
 	        code =  emit("mov","eax","#{statement[2][0]}")
 	        @asm_code[@asm_code.length,0] = code
 	      else
-	        code =  emit("mov","eax" "[ebp#{statement[2][4]}]")
+	        code =  emit("mov","eax" ,"[ebp#{statement[2][4]}]")
 	        @asm_code[@asm_code.length,0] = code
 	    end
 	  else
@@ -486,8 +513,8 @@ def arith(statement,ret = false)
 	  case statement.length
 	    when 3#elseなし　あとまずはcompound前提
 		  #statement[1]=条件式,statement[2]=comp,もしくはただのstatement
-		  arith(statement[1])
-		  @asm_code[@asm_code.length,0] = emit("cmp","eax","0")
+		  arith(statement[1],false,true)
+		  @asm_code[@asm_code.length,0] = emit("cmp","eax","0 ;この上が条件式")
 		  l1 = "L#{@unique_rabel+=1}"
 		  @asm_code[@asm_code.length,0] = emit("je","#{l1}",nil)
 		  if(statement[2][0]=="comp")
@@ -503,10 +530,10 @@ def arith(statement,ret = false)
 		  @asm_code[@asm_code.length,0] = emit("#{l1}:",nil,nil)
 		when 4
 		  #statement[1]=条件式,statement[2]=comp
-		  arith(statement[1])
-		  @asm_code[@asm_code.length,0] = emit("cmp","eax","0")
+		  arith(statement[1],false,true)
+		  @asm_code[@asm_code.length,0] = emit("cmp","eax","0 ;この上が条件式")
 		  l1 = "L#{@unique_rabel+=1}"
-		  @asm_code[@asm_code.length,0] = emit("je","#{l1}",nil)
+		  @asm_code[@asm_code.length,0] = emit("je","#{l1};ここからIF",nil)
 		  if(statement[2][1]=="comp")
 		    if_compound = []
 		    analyze_compound(statement[2],if_compound)
@@ -519,7 +546,7 @@ def arith(statement,ret = false)
 		  end
 		  l2 = "L#{@unique_rabel+=1}"
 		  @asm_code[@asm_code.length,0] = emit("jmp","#{l2}",nil)
-		  @asm_code[@asm_code.length,0] = emit("#{l1}:",nil,nil)
+		  @asm_code[@asm_code.length,0] = emit("#{l1}:",";ここからelse",nil)
 		  if(statement[3][0]=="comp")
 		    else_compound = []
 		    analyze_compound(statement[3],else_compound)
@@ -544,7 +571,7 @@ def arith(statement,ret = false)
 		    code =  emit("mov","eax","#{statement[1][0]}")
 			@asm_code[@asm_code.length,0] = code
 		  else
-		    code =  emit("mov","eax" "[ebp#{statement[1][4]}]")
+		    code =  emit("mov","eax", "[ebp#{statement[1][4]}]")
 			@asm_code[@asm_code.length,0] = code
 		end
 		@asm_code.push(emit("mov","[ebp#{tmp}]","eax"))
@@ -628,12 +655,15 @@ def arith(statement,ret = false)
 	  end
 	  if((statement[1]=="FUN")|| statement[1]=="UNDEFFUN")
 	    #p164
-		statement[3].reverse!.each do |st|
-		  arith(st)
-		  @asm_code.push(emit("push","eax",nil))
+		if(statement[3]!=nil)
+		  statement[3].reverse!.each do |st|
+		    arith(st)
+		    @asm_code.push(emit("push","eax",nil))
+		  end
 		end
 		@asm_code.push(emit("call","#{statement[0]}",nil))
-		@asm_code.push(emit("add","esp","#{statement[3].length*4}"))
+		@asm_code.push(emit("add","esp",0))
+		@asm_code.push(emit("add","esp","#{statement[3].length*4}")) if statement[3]!=nil
 	  end
 	  if(statement[1]=="CONSTANT")
 	    @asm_code.push(emit("mov","eax","#{statement[0]}"))
@@ -662,6 +692,7 @@ def make_asm(syntax_tree)
   @global_var = []#大域変数がとりあえずこの中にある。（大域変数って使うのか？）
   @statement_list = []
   @asm_code = []#アセンブリコードの配列
+  @asm_code.push("EXTERN chk\n")
   #puts syntax_tree.to_s
   syntax_tree.each do |i|
     case i[0]
@@ -689,9 +720,9 @@ def make_asm(syntax_tree)
 		@asm_code.push(emit("pop","ebp",nil))
         @asm_code.push(emit("ret",nil,nil))
 	  else
-	    i.each do |var|
+	    i.each_with_index do |var,i|
 		  #@global_var.push(var)
-		  @asm_code.push(emit("COMMON","#{var[1]} 32",nil))
+		  @asm_code.push(emit("COMMON","#{var[1]} #{32*i}",nil))
  	   end
 	end
     puts
@@ -721,7 +752,7 @@ puts
   puts
   print '? '
   #str = gets.chop!
-  str = File.open("test.c").read
+  str = File.open("#{ARGV[0]}").read
   puts str
 #  break if /\z/i =~ str
   begin
@@ -729,8 +760,12 @@ puts
 	#puts parser.parse(str).to_s
 	#parser.make_asm(parser.parse(str))
     code = parser.parse(str)
-	puts "error:#{@error_num.to_s}"
-	parser.make_asm(code) #if (@error_num==0)
+	puts "error:#{parser.return_error_num}"
+	if (parser.return_error_num==0)
+	  parser.make_asm(code)
+	else
+	  puts("no output assembla")
+    end
   rescue ParseError
     puts $!
 	p @q

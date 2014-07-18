@@ -687,7 +687,7 @@ module_eval(<<'.,.,', 'calc_rule.y', 121)
 module_eval(<<'.,.,', 'calc_rule.y', 122)
   def _reduce_57(val, _values, result)
     #result = ["FCALL", val[0] ,val[2]]}
-				                                             result = ref_fun(val[0],val[2].size).push(val[2])
+				                                             result = val[2]!=nil ? ref_fun(val[0],val[2].size).push(val[2]) : ref_fun(val[0],0).push(val[2])
     result
   end
 .,.,
